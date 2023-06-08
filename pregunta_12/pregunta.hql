@@ -33,3 +33,8 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+select z,x,count(*)  from (select c2,x from t0 LATERAL VIEW explode(c3) tb as x,y) tbxy LATERAL VIEW explode (c2) tb2 as z group by z,x;
