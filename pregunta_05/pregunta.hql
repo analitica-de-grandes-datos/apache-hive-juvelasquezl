@@ -45,3 +45,12 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+DROP TABLE IF EXISTS consulta;
+create table consulta as
+select SUBSTR (c4,1,4) as anio, myc5 from tbl0
+lateral view explode (c5) tbl0 as myc5;
+
+INSERT OVERWRITE DIRECTORY 'output/'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+select anio, myc5, count(1) as conteo from consulta
+group by anio, myc5;
