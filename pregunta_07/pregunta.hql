@@ -47,7 +47,7 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 */
 
 DROP TABLE IF EXISTS TBLFINAL;
-CREATE TABLE TBLFINAL AS select c2, collect_set(c1) from tbl0 group by c2 order by c1 ASC;
+CREATE TABLE TBLFINAL AS select c2, collect_set(c1) as valores from tbl0 group by c2, valores;
 INSERT OVERWRITE LOCAL DIRECTORY 'output'
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
